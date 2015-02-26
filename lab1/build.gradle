@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
 
 version = '0.1'
 
@@ -23,61 +22,12 @@ war {
     }
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.0'
-    }
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
-    //maven { url "http://repo.spring.io/libs-release" }
-}
-
-onlyFor(war) {
-    dependencies {
-        //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-    }
 }
 
 dependencies {
-    //compile("org.springframework.boot:spring-boot-starter-web")
-    //compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    //compile("org.springframework:spring-context-support")
-    //compile("com.google.guava:guava:18.0")
-    //providedCompile group: 'javax', name: 'javaee-api', version: '7.0'
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0',
                     'javax.servlet:jsp-api:2.0'
-
-    def tomcatVersion = '7.0.11'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
-    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
-        exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
-    }
-}
-
-tomcat {
-    httpPort = 8090
-    httpsPort = 8091
-    enableSSL = false
-    users {
-        user {
-            username = 'admin'
-            password = 'pass'
-            roles = ['developers', 'admin']
-        }
-    }
-}
-
-def onlyFor(task, config) {
-    gradle.taskGraph.whenReady { graph ->
-        if (graph.hasTask(task)) {
-            project.configure(project, config)
-        }
-    }
 }
