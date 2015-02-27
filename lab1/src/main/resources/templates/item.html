@@ -1,10 +1,74 @@
 <!DOCTYPE html>
-<html>
-<head lang="${lang}">
+<html lang="${lang.code}">
+<head>
     <meta charset="UTF-8">
     <title>${item.name} | #{store.title}</title>
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
 </head>
 <body>
-
+    <div class="topbar">
+        <div class="topbar-wrapper">
+            <div class="store-name">#{store.title}</div>
+            <form class="language-switch">
+                <label for="lang">#{store.language_switch.label}: </label>
+                <select id="lang" name="lang" onchange="submit()">
+                    <option value="en" ${lang.en.selected}>English</option>
+                    <option value="ru" ${lang.ru.selected}>Русский</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <h3 class="item-name">${item.name}</h3>
+    <ul class="tab-captions">
+        <li id="short-view-caption" class="active-caption"><a href="javascript:activateTab('short-view')">#{item.tab.short.caption}</a></li>
+        <li id="details-caption"><a href="javascript:activateTab('details')">#{item.tab.details.caption}</a></li>
+        <li id="reviews-caption"><a href="javascript:activateTab('reviews')">#{item.tab.reviews.caption}</a></li>
+    </ul>
+    <article class="tabs">
+        <section id="short-view-tab" style="display: block">
+            <img src="../item_images/${item.first_image_id}.png" height="600" />
+        </section>
+        <section id="details-tab">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div>
+                <div>#{item.image.label}: </div>
+                ${item.images}
+            </div>
+        </section>
+        <section id="reviews-tab">
+            <div>${item.reviews}</div>
+        </section>
+    </article>
+    <script type="text/javascript">
+        initTabs();
+        function initTabs() {
+            var tabs = document.querySelectorAll('.tabs section');
+            for (var i = 1; i < tabs.length; i++) {
+                tabs[i].style.display = 'none';
+            }
+        }
+        function activateTab(tabId) {
+            var tabControl = document.querySelector('.tabs');
+            var tabToActivate = document.getElementById(tabId + "-tab");
+            for (var i = 0; i < tabControl.childNodes.length; i++) {
+                var node = tabControl.childNodes[i];
+                if (node.nodeType == 1) { /* Element */
+                    node.style.display = (node == tabToActivate) ? 'block' : 'none';
+                }
+            }
+            var captionToActivate = document.getElementById(tabId + "-caption");
+            var captionControl = document.querySelector('.tab-captions')
+            for (var i = 0; i < captionControl.childNodes.length; i++) {
+                var node = captionControl.childNodes[i];
+                if (node.nodeType == 1) {
+                    node.classList.remove('active-caption');
+                    if (node == captionToActivate) {
+                        node.classList.add('active-caption');
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

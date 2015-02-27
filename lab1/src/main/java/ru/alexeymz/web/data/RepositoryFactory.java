@@ -17,7 +17,7 @@ public final class RepositoryFactory {
             if (id == 1001) {
                 return new SaleItem(id, "Храпмастер 6000",
                     "Упрощённая версия храпмастера 9000, но с возможностью апгрейда.",
-                    Arrays.asList(20011L, 20012L, 20013L),
+                    Arrays.asList(20011L, 20012L),
                     Arrays.asList(
                         new Feedback(30011L, "Всем доволен, рекомендую!", "dogbert", 10),
                         new Feedback(30012L, "Вместо прибора в коробке была рысь >:[", "rendall", 1)

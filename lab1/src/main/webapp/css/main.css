@@ -1,0 +1,62 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.topbar {
+    width: 100%;
+    height: 34px;
+    background: cornflowerblue;
+}
+.topbar-wrapper {
+    margin: 0 auto;
+    position: relative;
+}
+.topbar-wrapper .store-name {
+    font-family: sans-serif;
+    color: white;
+    position: absolute;
+    left: 0;
+    margin: 7px 0 0 30px;
+    font-variant: small-caps;
+    font-size: large;
+}
+.topbar-wrapper .language-switch {
+    right: 0;
+    margin: 7px 20px 0 0;
+    position: absolute;
+}
+.language-switch label {
+    color: white;
+}
+.item-name {
+    display: inline-block;
+    margin-left: 30px;
+}
+.tab-captions {
+    padding-left: 18px;
+    display: inline-block;
+}
+.tab-captions li {
+    display: inline-block;
+    cursor: pointer;
+}
+.tab-captions li a {
+    background-color: rgba(0, 0, 0, 0.40);
+    padding: 4px 10px 5px;
+    color: white;
+    text-decoration: none;
+}
+.tab-captions li.active-caption a {
+    background-color: orange;
+}
+.tab-captions li:hover a {
+    background-color: orange;
+}
+article.tabs {
+    display: block;
+}
+article.tabs section {
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+}
