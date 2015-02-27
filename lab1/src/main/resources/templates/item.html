@@ -47,14 +47,21 @@
         </section>
     </article>
     <script type="text/javascript">
-        initTabs();
-        activateImage('item-image-${item.first_image_id}');
+        window.onload = function () {
+            initTabs();
+            activateImage('item-image-${item.first_image_id}');
+        }
         function initTabs() {
             var tabs = document.querySelectorAll('.tabs section');
+            var defaultTabId;
             for (var i = 0; i < tabs.length; i++) {
-                if (i == ${page.default_tab_page}) { continue; }
+                if (i == ${page.default_tab_page}) {
+                    defaultTabId = tabs[i].id;
+                    continue;
+                }
                 tabs[i].style.display = 'none';
             }
+            activateTab(defaultTabId.substr(0, defaultTabId.length - 4));
         }
         function activateTab(tabId) {
             var tabControl = document.querySelector('.tabs');

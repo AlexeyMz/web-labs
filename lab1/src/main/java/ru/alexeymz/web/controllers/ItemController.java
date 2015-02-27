@@ -10,6 +10,7 @@ import ru.alexeymz.web.data.SaleItemRepository;
 import ru.alexeymz.web.model.SaleItem;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@WebServlet("/item/*")
+@WebServlet(value = "/item/*", initParams = {
+    @WebInitParam(name="default_tab", value="1")
+})
 public class ItemController extends BaseHttpServlet {
     private static final String PAGE_TEMPLATE = "templates/item.html";
     private static final String IMAGE_TEMPLATE = "templates/item_image.html";
@@ -65,7 +68,7 @@ public class ItemController extends BaseHttpServlet {
         try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream(), "UTF-8")) {
             Map<String, Object> bag = new HashMap<>();
             putLanguage(bag, langParam);
-            bag.put("page.default_tab_page", 0);
+            bag.put("page.default_tab_page", getInitParameter("default_tab"));
             bag.put("item.id", item.getId());
             bag.put("item.name", item.getName());
             bag.put("item.description", Unescaped.escapedWithNewLines(item.getDescription()));
