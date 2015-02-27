@@ -95,9 +95,15 @@ article.tabs section {
 }
 .item-image {
     display: inline-block;
+    cursor: pointer;
 }
 .item-image img {
     width: 100px;
+    border: solid 3px transparent;
+}
+.item-image img:hover,
+.item-image.active-image img {
+    border: solid 3px orange;
 }
 .item-review {
     position: relative;

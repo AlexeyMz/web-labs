@@ -35,7 +35,7 @@
                 <p>${item.description}</p>
             </div>
             <div class="image-viewer">
-                <img src="../item_images/${item.first_image_id}.png">
+                <img id="zoomed-area" src="../item_images/${item.first_image_id}.png">
                 <ul>
                     ${item.images}
                 </ul>
@@ -48,6 +48,7 @@
     </article>
     <script type="text/javascript">
         initTabs();
+        activateImage('item-image-${item.first_image_id}');
         function initTabs() {
             var tabs = document.querySelectorAll('.tabs section');
             for (var i = 0; i < tabs.length; i++) {
@@ -73,6 +74,18 @@
                     if (node == captionToActivate) {
                         node.classList.add('active-caption');
                     }
+                }
+            }
+        }
+        function activateImage(imageId) {
+            var zoomArea = document.getElementById('zoomed-area');
+            var itemImages = document.querySelectorAll('.item-image');
+            for (var i = 0; i < itemImages.length; i++) {
+                var itemImage = itemImages[i];
+                itemImage.classList.remove('active-image');
+                if (itemImage.id == imageId) {
+                    itemImage.classList.add('active-image');
+                    zoomArea.src = itemImage.querySelector('img').src;
                 }
             }
         }
