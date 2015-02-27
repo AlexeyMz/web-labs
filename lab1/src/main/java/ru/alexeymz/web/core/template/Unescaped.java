@@ -1,5 +1,7 @@
 package ru.alexeymz.web.core.template;
 
+import ru.alexeymz.web.core.utils.EscapeUtils;
+
 import java.util.ResourceBundle;
 
 public final class Unescaped implements Template {
@@ -7,6 +9,11 @@ public final class Unescaped implements Template {
 
     public Unescaped(String markup) {
         this.markup = markup;
+    }
+
+    public static Template escapedWithNewLines(String text) {
+        return new Unescaped(EscapeUtils.escapeHTML(text)
+                .replaceAll("(\\r)?\\n", "<br/>"));
     }
 
     @Override

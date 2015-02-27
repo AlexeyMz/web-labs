@@ -3,6 +3,7 @@ package ru.alexeymz.web.controllers;
 import ru.alexeymz.web.core.BaseHttpServlet;
 import ru.alexeymz.web.core.template.ExpressionEvaluator;
 import ru.alexeymz.web.core.template.TemplateCache;
+import ru.alexeymz.web.core.template.Unescaped;
 import ru.alexeymz.web.core.template.ViewTemplate;
 import ru.alexeymz.web.data.RepositoryFactory;
 import ru.alexeymz.web.data.SaleItemRepository;
@@ -53,7 +54,7 @@ public class ItemController extends BaseHttpServlet {
             bag.put("page.default_tab_page", 0);
             bag.put("item.id", item.getId());
             bag.put("item.name", item.getName());
-            bag.put("item.description", item.getDescription());
+            bag.put("item.description", Unescaped.escapedWithNewLines(item.getDescription()));
             bag.put("item.first_image_id", item.getImageIds().get(0));
             bag.put("item.images", imageTemplate.forEach(item.getImageIds(),
                 (id, subBag) -> {
@@ -62,7 +63,7 @@ public class ItemController extends BaseHttpServlet {
             bag.put("item.reviews", reviewTemplate.forEach(item.getReviews(),
                 (review, subBag) -> {
                     subBag.put("review.author", review.getAuthorName());
-                    subBag.put("review.text", review.getText());
+                    subBag.put("review.text", Unescaped.escapedWithNewLines(review.getText()));
                     int stars = review.getRate() / 2;
                     subBag.put("review.rate", repeat("\u2605", stars) + repeat("\u2606", 5 - stars));
                 }));

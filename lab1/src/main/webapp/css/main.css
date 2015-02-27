@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow-y: scroll;
 }
 .topbar {
     width: 100%;
@@ -30,7 +31,7 @@ body {
 }
 .item-name {
     display: inline-block;
-    margin-left: 30px;
+    margin-left: 40px;
 }
 .tab-captions {
     padding-left: 18px;
@@ -64,13 +65,42 @@ body {
 }
 article.tabs {
     display: block;
+    margin: 0 40px;
 }
 article.tabs section {
     border-radius: 5px;
     border-width: 1px;
     border-color: black;
 }
+#details-tab {
+    display: block;
+    width: 100%;
+}
+.info-panel {
+    float: left;
+    display: inline;
+    margin-left: 415px;
+    padding: 0 0 0 10px;
+}
+.image-viewer {
+    float: left;
+    display: inline;
+    margin-left: -100%;
+}
+.image-viewer img {
+    width: 400px;
+}
+.image-viewer ul {
+    padding: 0;
+}
+.item-image {
+    display: inline-block;
+}
+.item-image img {
+    width: 100px;
+}
 .item-review {
+    position: relative;
     border-width: 1px;
     border-color: black;
     border-style: dashed;

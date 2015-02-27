@@ -31,11 +31,15 @@
             <img src="../item_images/${item.first_image_id}.png" height="600" />
         </section>
         <section id="details-tab">
-            <h3>${item.name}</h3>
-            <p>${item.description}</p>
-            <div>
-                <div>#{item.image.label}: </div>
-                ${item.images}
+            <div class="info-panel">
+                <p>${item.description}</p>
+            </div>
+            <div class="image-viewer">
+                <img src="../item_images/${item.first_image_id}.png">
+                <ul>
+                    ${item.images}
+                </ul>
+                <!--<div>#{item.image.label}: </div>-->
             </div>
         </section>
         <section id="reviews-tab">
