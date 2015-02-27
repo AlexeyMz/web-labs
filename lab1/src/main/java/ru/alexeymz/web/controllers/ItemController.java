@@ -50,6 +50,8 @@ public class ItemController extends BaseHttpServlet {
 
             Map<String, Object> bag = new HashMap<>();
             putLanguage(bag, langParam);
+            bag.put("page.default_tab_page", 0);
+            bag.put("item.id", item.getId());
             bag.put("item.name", item.getName());
             bag.put("item.description", item.getDescription());
             bag.put("item.first_image_id", item.getImageIds().get(0));
@@ -61,7 +63,8 @@ public class ItemController extends BaseHttpServlet {
                 (review, subBag) -> {
                     subBag.put("review.author", review.getAuthorName());
                     subBag.put("review.text", review.getText());
-                    subBag.put("review.rate", review.getRate());
+                    int stars = review.getRate() / 2;
+                    subBag.put("review.rate", repeat("\u2605", stars) + repeat("\u2606", 5 - stars));
                 }));
 
             ResourceBundle localization = ResourceBundle.getBundle(
@@ -72,9 +75,16 @@ public class ItemController extends BaseHttpServlet {
         }
     }
 
+    private static String repeat(String s, int times) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < times; i++) { builder.append(s); }
+        return builder.toString();
+    }
+
     private void putLanguage(Map<String, Object> bag, String langCode) {
         bag.put("lang.code", langCode);
         bag.put("lang.en.selected", langCode.equals("en") ? "selected" : "");
         bag.put("lang.ru.selected", langCode.equals("ru") ? "selected" : "");
+        bag.put("lang.ja.selected", langCode.equals("ja") ? "selected" : "");
     }
 }

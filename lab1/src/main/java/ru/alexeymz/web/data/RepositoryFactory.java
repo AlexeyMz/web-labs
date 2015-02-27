@@ -20,7 +20,16 @@ public final class RepositoryFactory {
                     Arrays.asList(20011L, 20012L),
                     Arrays.asList(
                         new Feedback(30011L, "Всем доволен, рекомендую!", "dogbert", 10),
-                        new Feedback(30012L, "Вместо прибора в коробке была рысь >:[", "rendall", 1)
+                        new Feedback(30012L, "Вместо прибора в коробке была рысь >:[", "rendall", 2),
+                        new Feedback(30013L, "Достоинства: Тихий, в целом стало чище.\r\n" +
+                            "Недостатки: При включении с пульта переключаются каналы спутникого телевидения.",
+                            "Эдуард", 8),
+                        new Feedback(30014L, "I have edited my review since becoming aware that the 6000 doesn't " +
+                            "support hardware encryption my company requires either - which basically means " +
+                            "there's no benefit to choosing the 6000 line over the 9000, except for the reliability " +
+                            "grade that the 9000 line gets.", "Quentin Gerlach", 6),
+                        new Feedback(30015L, "初めての一眼レフカメラです。この価格でこの性能ならおススメですね。",
+                            "カスタマー", 4)
                     ));
             } else {
                 return null;
