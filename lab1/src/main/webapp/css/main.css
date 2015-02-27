@@ -72,6 +72,9 @@ article.tabs section {
     border-width: 1px;
     border-color: black;
 }
+#short-view-tab > img {
+    width: 100%;
+}
 #details-tab {
     display: block;
     width: 100%;

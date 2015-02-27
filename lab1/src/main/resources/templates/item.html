@@ -24,11 +24,11 @@
         <li id="short-view-caption" class="active-caption"><a href="javascript:activateTab('short-view')">#{item.tab.short.caption}</a></li>
         <li id="details-caption"><a href="javascript:activateTab('details')">#{item.tab.details.caption}</a></li>
         <li id="reviews-caption"><a href="javascript:activateTab('reviews')">#{item.tab.reviews.caption}</a></li>
-        <li id="add-to-cart"><a href="${item.id}/addToCart">+ #{item.add_to_cart.label}</a></li>
+        <li id="add-to-cart"><a href="${item.id}/add-to-cart">+ #{item.add_to_cart.label}</a></li>
     </ul>
     <article class="tabs">
         <section id="short-view-tab">
-            <img src="../item_images/${item.first_image_id}.png" height="600" />
+            <img src="../item_images/${item.first_image_id}.png" />
         </section>
         <section id="details-tab">
             <div class="info-panel">

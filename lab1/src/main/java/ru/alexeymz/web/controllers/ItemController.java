@@ -17,12 +17,16 @@ import javax.swing.text.View;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet("/item/*")
 public class ItemController extends BaseHttpServlet {
     private static final String PAGE_TEMPLATE = "templates/item.html";
     private static final String IMAGE_TEMPLATE = "templates/item_image.html";
     private static final String REVIEW_TEMPLATE = "templates/item_review.html";
+    private static final Pattern URI_PATTERN = Pattern.compile(
+            "^/item/([0-9]+)/?$", Pattern.CASE_INSENSITIVE);
 
     private final SaleItemRepository itemRepository;
     private final TemplateCache templateCache;
@@ -37,9 +41,21 @@ public class ItemController extends BaseHttpServlet {
             throws ServletException, IOException {
         configureForHtmlUtf8(req, resp);
 
+        Long itemId = matchItemId(req.getRequestURI());
+        if (itemId == null) {
+            resp.sendError(400);
+            return;
+        }
+
         String langParam = req.getParameter("lang");
         if (langParam == null) {
             langParam = req.getLocale().getLanguage();
+        }
+
+        SaleItem item = itemRepository.findItem(itemId);
+        if (item == null) {
+            resp.sendError(404);
+            return;
         }
 
         ViewTemplate pageTemplate = templateCache.get(PAGE_TEMPLATE);
@@ -47,8 +63,6 @@ public class ItemController extends BaseHttpServlet {
         ViewTemplate reviewTemplate = templateCache.get(REVIEW_TEMPLATE);
 
         try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream(), "UTF-8")) {
-            SaleItem item = itemRepository.findItem(1001);
-
             Map<String, Object> bag = new HashMap<>();
             putLanguage(bag, langParam);
             bag.put("page.default_tab_page", 0);
@@ -73,6 +87,16 @@ public class ItemController extends BaseHttpServlet {
 
             String rendered = pageTemplate.render(localization, ExpressionEvaluator.fromMap(bag));
             writer.write(rendered);
+        }
+    }
+
+    private Long matchItemId(String uri) {
+        Matcher matcher = URI_PATTERN.matcher(uri);
+        if (!matcher.find()) { return null; }
+        try {
+            return Long.valueOf(matcher.group(1));
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 
