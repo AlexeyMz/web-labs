@@ -1,0 +1,36 @@
+<?xml version="1.1"?>
+<cards>
+	<card id="394506" set="dtk" numberInSet="7" name="Battle Mastery" manaCost="2W">
+		<cardText>
+		Enchant creature
+
+		Enchanted creature has double strike. (It deals both first-strike and regular combat damage.)
+		</cardText>
+		<flavorText>
+		"There is elegance in all the Ojutai do—even their killing."
+		—Kirada, Silumgar enforcer
+		</flavorText>
+		<images>
+			<image>dtk_en_007</image>
+			<image>m15_en_004</image>
+			<image>lw_en_005</image>
+		</images>
+		<feedbacks>
+			<feedback id="30001" author="dogbert" rate="10">Всем доволен, рекомендую!</feedback>
+			<feedback id="30002" author="Randall Munroe" rate="2">"Вместо прибора в коробке была рысь >:["</feedback>
+			<feedback id="30003" author="Эдуард" rate="8">
+                Достоинства: Тихий, в целом стало чище.
+                Недостатки: При включении с пульта переключаются каналы спутникого телевидения.
+            </feedback>
+			<feedback id="30004" author="Quentin Gerlach" rate="6">
+                I have edited my review since becoming aware that the 6000 doesn't
+                support hardware encryption my company requires either - which basically means
+                there's no benefit to choosing the 6000 line over the 9000, except for the reliability
+                grade that the 9000 line gets.
+            </feedback>
+            <feedback id="30003" author="カスタマー" rate="4">
+                初めての一眼レフカメラです。この価格でこの性能ならおススメですね。
+            </feedback>
+		</feedbacks>
+	</card>
+</cards>
