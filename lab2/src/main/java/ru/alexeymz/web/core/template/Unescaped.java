@@ -12,8 +12,7 @@ public final class Unescaped implements Template {
     }
 
     public static Template escapedWithNewLines(String text) {
-        return new Unescaped(EscapeUtils.escapeHTML(text)
-                .replaceAll("(\\r)?\\n", "<br/>"));
+        return new Unescaped(EscapeUtils.escapeWithNewlines(text));
     }
 
     @Override

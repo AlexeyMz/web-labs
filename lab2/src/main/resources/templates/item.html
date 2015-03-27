@@ -9,14 +9,16 @@
     <div class="topbar">
         <div class="topbar-wrapper">
             <div class="store-name">#{store.title}</div>
-            <form class="language-switch">
-                <label for="lang">#{store.language_switch.label}: </label>
-                <select id="lang" name="lang" onchange="submit()">
-                    <option value="en" ${lang.en.selected}>English</option>
-                    <option value="ru" ${lang.ru.selected}>Русский</option>
-                    <option value="ja" ${lang.ja.selected}>日本人</option>
-                </select>
-            </form>
+            <div>
+                <form class="language-switch">
+                    <label for="lang">#{store.language_switch.label}: </label>
+                    <select id="lang" name="lang" onchange="submit()">
+                        <option value="en" ${lang.en.selected}>English</option>
+                        <option value="ru" ${lang.ru.selected}>Русский</option>
+                        <option value="ja" ${lang.ja.selected}>日本人</option>
+                    </select>
+                </form>
+            </div>
         </div>
     </div>
     <h3 class="item-name">${item.name}</h3>
@@ -32,7 +34,16 @@
         </section>
         <section id="details-tab">
             <div class="info-panel">
-                <p>${item.description}</p>
+                <h4 style="display: inline;">#{card.mana_cost}:</h4>
+                <div style="display: inline">${item.mana_cost}</div><br>
+                <h4 style="display: inline;">#{card.set}:</h4>
+                <div style="display: inline">${item.set}</div><br>
+                <h4 style="display: inline;">#{card.number_in_set}:</h4>
+                <div style="display: inline">${item.number_in_set}</div><br>
+                <h4>#{card.card_text}:</h4>
+                <p>${item.card_text}</p>
+                <h4>#{card.flavor_text}:</h4>
+                <p>${item.flavor_text}</p>
             </div>
             <div class="image-viewer">
                 <img id="zoomed-area" src="../card_images/${item.first_image_id}.jpg">

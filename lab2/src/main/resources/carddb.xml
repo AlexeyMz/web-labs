@@ -28,9 +28,44 @@
                 there's no benefit to choosing the 6000 line over the 9000, except for the reliability
                 grade that the 9000 line gets.
             </feedback>
-            <feedback id="30003" author="カスタマー" rate="4">
+            <feedback id="30005" author="カスタマー" rate="4">
                 初めての一眼レフカメラです。この価格でこの性能ならおススメですね。
             </feedback>
 		</feedbacks>
 	</card>
+    <card id="382897" set="vma" numberInSet="64" name="Counterspell" manaCost="UU">
+        <cardText>
+            Counter target spell.
+        </cardText>
+        <flavorText>
+            The pyromancer summoned up her mightiest onslaught of fire and rage. Jace feigned interest.
+        </flavorText>
+        <images>
+            <image>vma_en_064</image>
+            <image>7e_en_067</image>
+            <image>fnmp_en_066</image>
+        </images>
+        <feedbacks>
+            <feedback id="30006" author="Jace" rate="10">Keep calm and Counter target spell.</feedback>
+        </feedbacks>
+    </card>
+    <card id="135279" set="ts" numberInSet="251" name="Chromatic Star" manaCost="1">
+        <cardText>
+            {1}, {T}, Sacrifice Chromatic Star: Add one mana of any color to your mana pool.
+
+            When Chromatic Star is put into a graveyard from the battlefield, draw a card.
+        </cardText>
+        <flavorText>
+            "This item is not from . . . now. It reflects a sky no longer ours and gleams with hope that does not exist."
+            —Tavalus, acolyte of Korlis
+        </flavorText>
+        <images>
+            <image>ts_en_251</image>
+            <image>10e_ru_314</image>
+            <image>10e_jp_314</image>
+        </images>
+        <feedbacks>
+            <feedback id="30006" author="Karn" rate="8">Best for mana cost of 1.</feedback>
+        </feedbacks>
+    </card>
 </cards>

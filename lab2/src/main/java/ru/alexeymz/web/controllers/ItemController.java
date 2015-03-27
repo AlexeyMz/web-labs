@@ -65,7 +65,11 @@ public class ItemController extends BaseAppController {
             bag.put("page.default_tab_page", getInitParameter("default_tab"));
             bag.put("item.id", item.getId());
             bag.put("item.name", item.getName());
-            bag.put("item.description", Unescaped.escapedWithNewLines(item.getCardText()));
+            bag.put("item.set", item.getSet());
+            bag.put("item.number_in_set", item.getNumberInSet());
+            bag.put("item.mana_cost", item.getManaCost());
+            bag.put("item.card_text", Unescaped.escapedWithNewLines(item.getCardText()));
+            bag.put("item.flavor_text", Unescaped.escapedWithNewLines(item.getFlavorText()));
             bag.put("item.first_image_id", item.getImageIds().get(0));
             bag.put("item.images", imageTemplate.forEach(item.getImageIds(),
                 (id, subBag) -> {

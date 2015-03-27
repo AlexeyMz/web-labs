@@ -43,4 +43,8 @@ public final class EscapeUtils {
         }
         return buf.toString();
     }
+
+    public static String escapeWithNewlines(String text) {
+        return escapeHTML(text).replaceAll("(\\r)?\\n", "<br/>");
+    }
 }

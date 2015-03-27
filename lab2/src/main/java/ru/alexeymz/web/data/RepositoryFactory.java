@@ -13,10 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -36,9 +33,10 @@ public final class RepositoryFactory {
             }
 
             @Override
-            public List<Card> findAllBySet(String set) {
+            public List<Card> findAllBySet(Optional<String> set) {
+                if (!set.isPresent()) { return new ArrayList<>(cards.values()); }
                 return cards.values().stream()
-                        .filter(c -> c.getSet().equals(set))
+                        .filter(c -> c.getSet().equals(set.get()))
                         .collect(toList());
             }
         };
