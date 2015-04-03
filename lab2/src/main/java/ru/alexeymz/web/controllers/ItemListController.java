@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 
 @WebServlet("/item-list")
 public class ItemListController extends BaseAppController {
+    private static final String SELECTED_SET_COOKIE = "selectedCardSet";
+
     private CardRepository cardRepository;
 
     public ItemListController() {
@@ -30,10 +32,12 @@ public class ItemListController extends BaseAppController {
 
         Optional<String> selectedSet = Optional.ofNullable(req.getParameter("filter"));
         if (selectedSet.isPresent()) {
-            resp.addCookie(new Cookie("selectedCardSet", selectedSet.get()));
+            Cookie cookie = new Cookie(SELECTED_SET_COOKIE, selectedSet.get());
+            cookie.setMaxAge(10); /* seconds */
+            resp.addCookie(cookie);
         } else {
             selectedSet = Arrays.stream(req.getCookies())
-                    .filter(c -> c.getName().equals("selectedCardSet"))
+                    .filter(c -> c.getName().equals(SELECTED_SET_COOKIE))
                     .map(Cookie::getValue)
                     .findFirst();
         }
@@ -41,7 +45,7 @@ public class ItemListController extends BaseAppController {
         Set<String> sets = cardRepository.findAllBySet(Optional.<String>empty())
                 .stream().map(Card::getSet).collect(Collectors.toSet());
         String setToFind = selectedSet.orElse(null);
-        if (setToFind.equals("none")) { setToFind = null; }
+        if (setToFind != null && setToFind.equals("none")) { setToFind = null; }
 
         req.setAttribute("l10n", localization);
         req.setAttribute("languages", LANGUAGES);
