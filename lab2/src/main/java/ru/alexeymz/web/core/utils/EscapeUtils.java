@@ -47,4 +47,9 @@ public final class EscapeUtils {
     public static String escapeWithNewlines(String text) {
         return escapeHTML(text).replaceAll("(\\r)?\\n", "<br/>");
     }
+
+    public static String escapeWithParagraphs(String text) {
+        return "<p>" + escapeHTML(text).replaceAll(
+                "(\\r)?\\n", "</p>\r\n<p>") + "</p>";
+    }
 }

@@ -39,6 +39,10 @@ body {
 .language-switch label {
     color: white;
 }
+.back-button {
+    padding: 4px;
+    margin-right: 10px;
+}
 .item-name {
     display: inline-block;
     margin-left: 40px;
@@ -151,14 +155,18 @@ article.tabs section {
 .card-list-item {
     display: block;
 }
-.card-list-item > a > div {
+.card-list-item > div {
     margin: 5px 5px 5px 5px;
     border: 1px solid black;
 }
 .card-list-item a {
     text-decoration: none;
 }
-.card-list-item a div {
-    color: black;
-    text-decoration: none;
+.card-list-item .flavorText {
+    font-style: italic;
+}
+.card-list-item button {
+    float: right;
+    margin: 10px 10px 5px 5px;
+    padding: 5px;
 }

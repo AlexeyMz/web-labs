@@ -21,7 +21,10 @@
             </div>
         </div>
     </div>
-    <h3 class="item-name">${item.name}</h3>
+    <h3 class="item-name">
+        <input type="button" class="back-button" value="&#8592;" onclick="window.history.back()"/>
+        ${item.name}
+    </h3>
     <ul class="tab-captions">
         <li id="short-view-caption" class="active-caption"><a href="javascript:activateTab('short-view')">#{item.tab.short.caption}</a></li>
         <li id="details-caption"><a href="javascript:activateTab('details')">#{item.tab.details.caption}</a></li>

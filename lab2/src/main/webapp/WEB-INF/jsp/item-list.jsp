@@ -15,7 +15,7 @@
     <jsp:include page="topbar.jsp" />
     <label for="cardSetFilter"><%= l10n.getString("card.set") %>: </label>
     <select id="cardSetFilter" onchange="onFilterChanged();">
-        <option value="">&mdash;</option>
+        <option value="none">&mdash;</option>
         <% for (String set : (Collection<String>)request.getAttribute("sets")) { %>
             <% boolean selected = set.equals(request.getAttribute("selectedSet")); %>
             <option value="<%= set %>" <%= selected ? "selected" : "" %>><%= set %></option>
