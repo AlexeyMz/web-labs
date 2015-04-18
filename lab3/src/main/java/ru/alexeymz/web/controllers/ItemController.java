@@ -68,6 +68,7 @@ public class ItemController extends BaseAppController {
             putLanguage(bag, (String)req.getAttribute("langCode"));
             bag.put("page.default_tab_page", getInitParameter("default_tab"));
             bag.put("item.id", item.getId());
+            bag.put("item.price", item.getPrice());
             bag.put("item.name", item.getName());
             bag.put("item.set", item.getSet());
             bag.put("item.number_in_set", item.getNumberInSet());

@@ -2,6 +2,9 @@
 <%@ page import="ru.alexeymz.web.core.utils.EscapeUtils" %>
 <%@ page import="ru.alexeymz.web.core.template.Unescaped" %>
 <%@ page import="java.util.ResourceBundle" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.langCode}" />
+<fmt:setBundle basename="i18n/text" />
 <% ResourceBundle l10n = (ResourceBundle) request.getAttribute("l10n"); %>
 <% Card card = (Card) request.getAttribute("card"); %>
 <li class="card-list-item">
@@ -13,9 +16,17 @@
                 <img height="200" align="left" src="card_images/no_image.jpg" />
             <% } %>
         </a>
-        <button onclick="post('cart', {add: <%= card.getId() %>})">
-            <%= l10n.getString("item.add_to_cart.label") %>
-        </button>
+        <div class="pricing">
+            <fmt:message key="cart.price" />:
+            <span class="price">
+                <fmt:formatNumber value="${card.price}"
+                      minFractionDigits="2" type="currency"
+                      currencyCode="USD" />
+            </span>
+            <button onclick="post('cart', {add: <%= card.getId() %>})">
+                <%= l10n.getString("item.add_to_cart.label") %>
+            </button>
+        </div>
         <h4><%= card.getName() %></h4>
         <div class="cardText"><%= EscapeUtils.escapeWithParagraphs(card.getCardText()) %></div>
         <div class="flavorText"><%= EscapeUtils.escapeWithParagraphs(card.getFlavorText()) %></div>

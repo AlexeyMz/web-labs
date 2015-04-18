@@ -21,6 +21,9 @@ body {
     font-variant: small-caps;
     font-size: large;
 }
+.topbar-wrapper .store-name a {
+    color: white;
+}
 .topbar-wrapper > div {
     right: 0;
     margin: 7px 20px 0 0;
@@ -165,17 +168,20 @@ article.tabs section {
 .card-list-item .flavorText {
     font-style: italic;
 }
-.card-list-item button {
+.card-list-item .pricing {
     float: right;
     margin: 10px 10px 5px 5px;
+}
+.card-list-item button {
     padding: 5px;
+    margin-left: 5px;
+}
+.price {
+    text-decoration: underline;
 }
 .total-info {
     float: right;
     margin: 10px 10px;
-}
-.total-info .price {
-    text-decoration: underline;
 }
 .total-info button {
     padding: 4px;
