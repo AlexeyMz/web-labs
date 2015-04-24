@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+version = '0.4'
+
+compileJava {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = 1.8
+}
+
+jar {
+    baseName = 'lab4'
+    version =  '0.4.0'
+}
+
+war {
+    baseName = 'lab4'
+    version = '0.4.0'
+    configurations {
+        providedRuntime
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0',
+                    'javax.servlet:jsp-api:2.0'
+    compile 'javax.servlet:jstl:1.2'
+}

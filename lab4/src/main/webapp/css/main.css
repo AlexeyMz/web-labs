@@ -1,0 +1,204 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+}
+.topbar {
+    width: 100%;
+    height: 34px;
+    background: cornflowerblue;
+}
+.topbar-wrapper {
+    margin: 0 auto;
+    position: relative;
+}
+.topbar-wrapper .store-name {
+    font-family: sans-serif;
+    color: white;
+    position: absolute;
+    left: 0;
+    margin: 7px 0 0 30px;
+    font-variant: small-caps;
+    font-size: large;
+}
+.topbar-wrapper .store-name a {
+    color: white;
+}
+.topbar-wrapper > div {
+    right: 0;
+    margin: 7px 20px 0 0;
+    position: absolute;
+}
+.topbar-wrapper .button {
+    display: inline-block;
+    background: white;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 0 2px 0 2px;
+}
+.topbar-wrapper .language-switch {
+    display: inline-block;
+}
+.language-switch label {
+    color: white;
+}
+.back-button {
+    padding: 4px;
+    margin-right: 10px;
+}
+.item-name {
+    display: inline-block;
+    margin-left: 40px;
+}
+.tab-captions {
+    padding-left: 18px;
+    display: inline-block;
+}
+.tab-captions li {
+    display: inline-block;
+    cursor: pointer;
+}
+.tab-captions li a {
+    background-color: rgba(0, 0, 0, 0.40);
+    padding: 4px 10px 5px;
+    color: white;
+    text-decoration: none;
+}
+.tab-captions li.active-caption a {
+    background-color: orange;
+}
+.tab-captions li:hover a {
+    background-color: orange;
+}
+#add-to-cart {
+    margin-left: 30px;
+}
+#add-to-cart a {
+    background-color: orangered;
+    border-radius: 10px;
+}
+#add-to-cart:hover a {
+    background-color: lightcoral;
+}
+article.tabs {
+    display: block;
+    margin: 0 40px;
+}
+article.tabs section {
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: black;
+}
+#short-view-tab > img {
+    width: 100%;
+}
+#details-tab {
+    display: block;
+    width: 100%;
+}
+.info-panel {
+    float: left;
+    display: inline;
+    margin-left: 315px;
+    padding: 0 0 0 10px;
+}
+.info-panel h4 {
+    margin-bottom: 5px;
+}
+.info-panel p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.image-viewer {
+    float: left;
+    display: inline;
+    margin-left: -100%;
+}
+.image-viewer img {
+    width: 300px;
+}
+.image-viewer ul {
+    padding: 0;
+}
+.item-image {
+    display: inline-block;
+    cursor: pointer;
+}
+.item-image img {
+    width: 100px;
+    border: solid 3px transparent;
+}
+.item-image img:hover,
+.item-image.active-image img {
+    border: solid 3px orange;
+}
+.item-review {
+    position: relative;
+    border-width: 1px;
+    border-color: black;
+    border-style: dashed;
+    border-radius: 5px;
+    margin: 0.5em 0;
+    padding: 3px 7px;
+}
+.review-author {
+    display: inline-block;
+}
+.review-rate {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    margin-right: 0.5em;
+}
+.review-text {
+    margin-top: 4px;
+    border-top: dotted 1px lightgrey;
+}
+
+.card-list-item {
+    display: block;
+}
+.card-list-item > div {
+    margin: 5px 5px 5px 5px;
+    border: 1px solid black;
+}
+.card-list-item a {
+    text-decoration: none;
+}
+.card-list-item .flavorText {
+    font-style: italic;
+}
+.card-list-item .pricing {
+    float: right;
+    margin: 10px 10px 5px 5px;
+}
+.card-list-item button {
+    padding: 5px;
+    margin-left: 5px;
+}
+.price {
+    text-decoration: underline;
+}
+.total-info {
+    float: right;
+    margin: 10px 10px;
+}
+.total-info button {
+    padding: 4px;
+    margin-left: 5px;
+}
+.login-form {
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.login-form > div {
+    margin-bottom: 7px;
+}
+.login-form .auth-error {
+    color: red;
+    font-style: italic;
+}
+.username {
+    font-style: italic;
+}
