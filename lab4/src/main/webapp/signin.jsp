@@ -12,7 +12,7 @@
 </head>
 <body>
     <jsp:include page="WEB-INF/jsp/topbar.jsp">
-        <jsp:param name="title-key" value='signin.title'/>
+        <jsp:param name="title-key" value="signin.title"/>
     </jsp:include>
     <fmt:message key="signin.username.placeholder" var="usernamePlaceholder" />
     <fmt:message key="signin.submit.label" var="submitLabel" />

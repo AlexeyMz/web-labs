@@ -4,7 +4,7 @@
          version="3.0">
     <security-constraint>
         <web-resource-collection>
-            <url-pattern>/item-list</url-pattern>
+            <url-pattern>/profile</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>

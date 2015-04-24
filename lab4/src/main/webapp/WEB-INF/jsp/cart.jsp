@@ -13,7 +13,7 @@
 </head>
 <body>
     <jsp:include page="topbar.jsp">
-        <jsp:param name="title-key" value='cart.title'/>
+        <jsp:param name="title-key" value="cart.title"/>
     </jsp:include>
     <div class="total-info">
         <span>

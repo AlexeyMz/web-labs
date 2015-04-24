@@ -14,7 +14,7 @@
 </head>
 <body>
     <jsp:include page="topbar.jsp">
-        <jsp:param name="title-key" value='list.title'/>
+        <jsp:param name="title-key" value="list.title"/>
     </jsp:include>
     <label for="cardSetFilter"><%= l10n.getString("card.set") %>: </label>
     <select id="cardSetFilter" onchange="onFilterChanged();">

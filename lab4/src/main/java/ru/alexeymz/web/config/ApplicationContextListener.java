@@ -1,6 +1,8 @@
 package ru.alexeymz.web.config;
 
 import ru.alexeymz.web.data.CardRepository;
+import ru.alexeymz.web.data.UserRepository;
+import ru.alexeymz.web.impl.data.InMemoryUserRepository;
 import ru.alexeymz.web.impl.data.XmlCardRepository;
 
 import javax.servlet.ServletContext;
@@ -14,6 +16,7 @@ public class ApplicationContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
         context.setAttribute(CardRepository.ATTRIBUTE, new XmlCardRepository("carddb.xml"));
+        context.setAttribute(UserRepository.ATTRIBUTE, new InMemoryUserRepository());
     }
 
     @Override
