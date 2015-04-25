@@ -1,8 +1,11 @@
 package ru.alexeymz.web.config;
 
+import ru.alexeymz.web.core.HttpFilter;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.ResourceBundle;
 @WebFilter(
     urlPatterns = {"/*"},
     dispatcherTypes = {DispatcherType.REQUEST, DispatcherType.FORWARD})
-public class LocalizationFilter implements Filter {
+public class LocalizationFilter extends HttpFilter {
     protected static final ResourceBundle.Control LANGUAGE_SELECTOR = new ResourceBundle.Control() {
         @Override
         public List<Locale> getCandidateLocales(String baseName, Locale locale) {
@@ -35,23 +38,18 @@ public class LocalizationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(
-        ServletRequest request,
-        ServletResponse response,
+    public void filter(
+        HttpServletRequest req,
+        HttpServletResponse resp,
         FilterChain chain) throws IOException, ServletException
     {
-        if (!(request instanceof HttpServletRequest)) {
-            chain.doFilter(request, response);
-            return;
-        }
-        HttpServletRequest req = (HttpServletRequest)request;
+        configureForHtmlUtf8(req, resp);
 
         String langParam = req.getParameter("lang");
         if (langParam != null) {
             req.getSession().setAttribute(LOCALE_SESSION_ATTRIBUTE, langParam);
         }
-        String langCode = (String)req.getSession().getAttribute(
-                LOCALE_SESSION_ATTRIBUTE);
+        String langCode = (String)req.getSession().getAttribute(LOCALE_SESSION_ATTRIBUTE);
         if (langCode == null) {
             langCode = req.getLocale().getLanguage();
             req.getSession().setAttribute(LOCALE_SESSION_ATTRIBUTE, langCode);
@@ -60,9 +58,13 @@ public class LocalizationFilter implements Filter {
                 "i18n.text", Locale.forLanguageTag(langCode), LANGUAGE_SELECTOR);
         req.setAttribute("langCode", langCode);
         req.setAttribute("l10n", localization);
-        chain.doFilter(request, response);
+        chain.doFilter(req, resp);
     }
 
-    @Override
-    public void destroy() {}
+    private void configureForHtmlUtf8(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
+        resp.setCharacterEncoding("UTF-8");
+    }
 }

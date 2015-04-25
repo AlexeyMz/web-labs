@@ -36,12 +36,17 @@ body {
     padding: 2px;
     margin: 0 2px 0 2px;
 }
+.topbar-wrapper .profile-bar img {
+    max-width: 28px;
+    height: 14px;
+}
 .topbar-wrapper .language-switch {
     display: inline-block;
 }
 .language-switch label {
     color: white;
 }
+/*** item ***/
 .back-button {
     padding: 4px;
     margin-right: 10px;
@@ -154,7 +159,14 @@ article.tabs section {
     margin-top: 4px;
     border-top: dotted 1px lightgrey;
 }
-
+/*** item-list ***/
+.card-set-filter {
+    margin-left: 25px;
+    margin-top: 5px;
+}
+.card-list {
+    margin-top: 6px;
+}
 .card-list-item {
     display: block;
 }
@@ -179,6 +191,7 @@ article.tabs section {
 .price {
     text-decoration: underline;
 }
+/*** cart ***/
 .total-info {
     float: right;
     margin: 10px 10px;
@@ -187,6 +200,7 @@ article.tabs section {
     padding: 4px;
     margin-left: 5px;
 }
+/*** sign in ***/
 .login-form {
     width: 350px;
     margin: 0 auto;
@@ -199,6 +213,20 @@ article.tabs section {
     color: red;
     font-style: italic;
 }
+/*** profile ***/
 .username {
     font-style: italic;
+}
+.user-profile-card {
+    margin-left: 100px;
+    margin-top: 20px;
+}
+.user-profile-card img.avatar {
+    float: left;
+    margin-right: 20px;
+    max-width: 200px;
+    height: 100px;
+}
+.user-profile-card > div {
+    margin-bottom: 6px;
 }

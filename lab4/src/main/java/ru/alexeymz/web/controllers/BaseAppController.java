@@ -1,10 +1,9 @@
 package ru.alexeymz.web.controllers;
 
-import ru.alexeymz.web.core.BaseHttpServlet;
-
+import javax.servlet.http.HttpServlet;
 import java.util.IllegalFormatException;
 
-public abstract class BaseAppController extends BaseHttpServlet {
+public abstract class BaseAppController extends HttpServlet {
     protected Long matchId(String param) {
         if (param == null) { return null; }
         try {

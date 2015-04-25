@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 </head>
 <body>
-    <jsp:include page="WEB-INF/jsp/topbar.jsp">
+    <jsp:include page="topbar.jsp">
         <jsp:param name="title-key" value="signin.title"/>
     </jsp:include>
     <fmt:message key="signin.username.placeholder" var="usernamePlaceholder" />

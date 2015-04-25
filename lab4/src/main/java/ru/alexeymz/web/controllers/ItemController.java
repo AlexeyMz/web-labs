@@ -7,7 +7,9 @@ import ru.alexeymz.web.core.template.TemplateCache;
 import ru.alexeymz.web.core.template.Unescaped;
 import ru.alexeymz.web.core.template.ViewTemplate;
 import ru.alexeymz.web.data.CardRepository;
+import ru.alexeymz.web.data.UserRepository;
 import ru.alexeymz.web.model.Card;
+import ru.alexeymz.web.model.User;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -42,14 +44,11 @@ public class ItemController extends BaseAppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        configureForHtmlUtf8(req, resp);
-
+            throws ServletException, IOException
+    {
         String itemIdParam = req.getParameter("id");
-        if (itemIdParam == null) {
-            resp.sendError(400);
-            return;
-        }
+        if (itemIdParam == null) { resp.sendError(400); return; }
+
         Long itemId = 0L;
         try {
             itemId = Long.valueOf(itemIdParam);
@@ -59,19 +58,20 @@ public class ItemController extends BaseAppController {
         }
 
         Card item = cardRepository.findById(itemId);
-        if (item == null) {
-            resp.sendError(404);
-            return;
-        }
+        if (item == null) { resp.sendError(404); return; }
 
         ViewTemplate pageTemplate = templateCache.get(PAGE_TEMPLATE);
         ViewTemplate imageTemplate = templateCache.get(IMAGE_TEMPLATE);
         ViewTemplate reviewTemplate = templateCache.get(REVIEW_TEMPLATE);
 
+        User user = (User)req.getAttribute("user");
+
         try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream(), "UTF-8")) {
             Map<String, Object> bag = new HashMap<>();
             putLanguage(bag, (String)req.getAttribute("langCode"));
-            bag.put("page.default_tab_page", getInitParameter("default_tab"));
+            String defaultTab = user != null && user.getDefaultTab() != null
+                    ? user.getDefaultTab() : getInitParameter("default_tab");
+            bag.put("page.default_tab_page", defaultTab);
             bag.put("item.id", item.getId());
             bag.put("item.price", item.getPrice());
             bag.put("item.name", item.getName());

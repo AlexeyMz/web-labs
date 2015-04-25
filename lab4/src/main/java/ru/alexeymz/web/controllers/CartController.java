@@ -30,7 +30,6 @@ public class CartController extends BaseAppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        configureForHtmlUtf8(req, resp);
         req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
     }
 
@@ -40,8 +39,6 @@ public class CartController extends BaseAppController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        configureForHtmlUtf8(req, resp);
-
         Command command = Command.NONE;
         String param = req.getParameter("add");
         if (param != null) {
@@ -95,7 +92,7 @@ public class CartController extends BaseAppController {
                         BigDecimal.valueOf(ce.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add));
 
-        req.getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(req, resp);
+        resp.sendRedirect(req.getRequestURI());
     }
 
     List<CartEntry> ensureEntries(HttpServletRequest req) {

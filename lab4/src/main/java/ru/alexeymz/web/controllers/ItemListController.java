@@ -16,9 +16,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//@ServletSecurity(
-//    @HttpConstraint(rolesAllowed = {"user"})
-//)
 @WebServlet("/item-list")
 public class ItemListController extends BaseAppController {
     private static final String SELECTED_SET_COOKIE = "selectedCardSet";
@@ -35,8 +32,6 @@ public class ItemListController extends BaseAppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        configureForHtmlUtf8(req, resp);
-
         Optional<String> selectedSet = Optional.ofNullable(req.getParameter("filter"));
         if (selectedSet.isPresent()) {
             Cookie cookie = new Cookie(SELECTED_SET_COOKIE, selectedSet.get());

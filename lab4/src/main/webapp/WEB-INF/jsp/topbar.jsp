@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ru.alexeymz.web.config.Language" %>
 <%@ page import="java.util.Collections" %>
+<%@ page import="ru.alexeymz.web.model.User" %>
 <% ResourceBundle l10n = (ResourceBundle) request.getAttribute("l10n"); %>
 <div class="topbar">
     <div class="topbar-wrapper">
@@ -10,13 +11,19 @@
             <%= l10n.getString(request.getParameter("title-key")) %> |
             <%= l10n.getString("store.title") %></a>
         </div>
-        <div>
+        <div class="profile-bar">
             <div class="button">
-                <% if (request.getRemoteUser() == null) { %>
-                    <a href="signin.jsp"><%= l10n.getString("topbar.signin") %></a>
+                <% User user = (User)request.getAttribute("user"); %>
+                <% if (user == null) { %>
+                    <a href="profile"><%= l10n.getString("topbar.signin") %></a>
                 <% } else { %>
                     <%= l10n.getString("topbar.welcome") %>
-                    <a href="profile"><span class="username"><%= request.getRemoteUser() %></span></a>
+                    <a href="profile">
+                        <% if (user.getAvatar() != null) { %>
+                            <img src="data:image/jpg;base64,<%= user.getAvatar() %>" />
+                        <% } %>
+                        <span class="username"><%= user.getFirstName() %></span>
+                    </a>
                     (<span class="signout"><a href="signout.jsp"><%= l10n.getString("topbar.signout") %></a></span>)
                 <% } %>
             </div>

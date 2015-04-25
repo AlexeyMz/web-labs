@@ -16,15 +16,17 @@
     <jsp:include page="topbar.jsp">
         <jsp:param name="title-key" value="list.title"/>
     </jsp:include>
-    <label for="cardSetFilter"><%= l10n.getString("card.set") %>: </label>
-    <select id="cardSetFilter" onchange="onFilterChanged();">
-        <option value="none">&mdash;</option>
-        <% for (String set : (Collection<String>)request.getAttribute("sets")) { %>
-            <% boolean selected = set.equals(request.getAttribute("selectedSet")); %>
-            <option value="<%= set %>" <%= selected ? "selected" : "" %>><%= set %></option>
-        <% } %>
-    </select>
-    <ul>
+    <div class="card-set-filter">
+        <label for="cardSetFilter"><%= l10n.getString("card.set") %>: </label>
+        <select id="cardSetFilter" onchange="onFilterChanged();">
+            <option value="none">&mdash;</option>
+            <% for (String set : (Collection<String>)request.getAttribute("sets")) { %>
+                <% boolean selected = set.equals(request.getAttribute("selectedSet")); %>
+                <option value="<%= set %>" <%= selected ? "selected" : "" %>><%= set %></option>
+            <% } %>
+        </select>
+    </div>
+    <ul class="card-list">
     <% for (Card card : (List<Card>) request.getAttribute("cards")) { %>
         <% request.setAttribute("card", card); %>
         <jsp:include page="item-in-list.jsp" />

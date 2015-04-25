@@ -52,4 +52,8 @@ public final class EscapeUtils {
         return "<p>" + escapeHTML(text).replaceAll(
                 "(\\r)?\\n", "</p>\r\n<p>") + "</p>";
     }
+
+    public static String wrapNull(String input) {
+        return input == null ? "" : input;
+    }
 }
