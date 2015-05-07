@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="${lang.code}">
+<head>
+    <meta charset="UTF-8">
+    <title>${item.name} | #{store.title}</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+    <script src="js/util.js"></script>
+</head>
+<body>
+    <div class="topbar">
+        <div class="topbar-wrapper">
+            <div class="store-name">#{store.title}</div>
+            <div>
+                <form class="language-switch">
+                    <input type="hidden" name="id" value="${item.id}"/>
+                    <label for="lang">#{store.language_switch.label}: </label>
+                    <select id="lang" name="lang" onchange="submit()">
+                        <option value="en" ${lang.en.selected}>English</option>
+                        <option value="ru" ${lang.ru.selected}>Русский</option>
+                        <option value="ja" ${lang.ja.selected}>日本人</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+    <h3 class="item-name">
+        <input type="button" class="back-button" value="&#8592;" onclick="window.history.back()"/>
+        ${item.name}
+    </h3>
+    <ul class="tab-captions">
+        <li id="short-view-caption" class="active-caption"><a href="javascript:activateTab('short-view')">#{item.tab.short.caption}</a></li>
+        <li id="details-caption"><a href="javascript:activateTab('details')">#{item.tab.details.caption}</a></li>
+        <li id="reviews-caption"><a href="javascript:activateTab('reviews')">#{item.tab.reviews.caption}</a></li>
+        <li id="add-to-cart"><a href="javascript:post('cart', {add: ${item.id}})">+ #{item.add_to_cart.label}</a></li>
+    </ul>
+    <article class="tabs">
+        <section id="short-view-tab">
+            <img src="../card_images/${item.first_image_id}.jpg" />
+        </section>
+        <section id="details-tab">
+            <div class="info-panel">
+                <h4 style="display: inline;">#{cart.price}:</h4>
+                <div style="display: inline">USD&nbsp;${item.price}</div><br>
+                <h4 style="display: inline;">#{card.mana_cost}:</h4>
+                <div style="display: inline">${item.mana_cost}</div><br>
+                <h4 style="display: inline;">#{card.set}:</h4>
+                <div style="display: inline">${item.set}</div><br>
+                <h4 style="display: inline;">#{card.number_in_set}:</h4>
+                <div style="display: inline">${item.number_in_set}</div><br>
+                <h4>#{card.card_text}:</h4>
+                <p>${item.card_text}</p>
+                <h4>#{card.flavor_text}:</h4>
+                <p>${item.flavor_text}</p>
+            </div>
+            <div class="image-viewer">
+                <img id="zoomed-area" src="../card_images/${item.first_image_id}.jpg">
+                <ul>
+                    ${item.images}
+                </ul>
+                <!--<div>#{item.image.label}: </div>-->
+            </div>
+        </section>
+        <section id="reviews-tab">
+            <div>${item.reviews}</div>
+        </section>
+    </article>
+    <script type="text/javascript">
+        window.onload = function () {
+            initTabs();
+            activateImage('item-image-${item.first_image_id}');
+        }
+        function initTabs() {
+            var tabs = document.querySelectorAll('.tabs section');
+            var defaultTabId;
+            for (var i = 0; i < tabs.length; i++) {
+                if (i == ${page.default_tab_page}) {
+                    defaultTabId = tabs[i].id;
+                    continue;
+                }
+                tabs[i].style.display = 'none';
+            }
+            activateTab(defaultTabId.substr(0, defaultTabId.length - 4));
+        }
+        function activateTab(tabId) {
+            var tabControl = document.querySelector('.tabs');
+            var tabToActivate = document.getElementById(tabId + "-tab");
+            for (var i = 0; i < tabControl.childNodes.length; i++) {
+                var node = tabControl.childNodes[i];
+                if (node.nodeType == 1) { /* Element */
+                    node.style.display = (node == tabToActivate) ? 'block' : 'none';
+                }
+            }
+            var captionToActivate = document.getElementById(tabId + "-caption");
+            var captionControl = document.querySelector('.tab-captions')
+            for (var i = 0; i < captionControl.childNodes.length; i++) {
+                var node = captionControl.childNodes[i];
+                if (node.nodeType == 1) {
+                    node.classList.remove('active-caption');
+                    if (node == captionToActivate) {
+                        node.classList.add('active-caption');
+                    }
+                }
+            }
+        }
+        function activateImage(imageId) {
+            var zoomArea = document.getElementById('zoomed-area');
+            var itemImages = document.querySelectorAll('.item-image');
+            for (var i = 0; i < itemImages.length; i++) {
+                var itemImage = itemImages[i];
+                itemImage.classList.remove('active-image');
+                if (itemImage.id == imageId) {
+                    itemImage.classList.add('active-image');
+                    zoomArea.src = itemImage.querySelector('img').src;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
