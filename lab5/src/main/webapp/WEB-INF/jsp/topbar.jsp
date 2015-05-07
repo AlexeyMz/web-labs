@@ -1,9 +1,9 @@
-<%@ page import="java.util.ResourceBundle" %>
 <%@ page import="ru.alexeymz.web.model.CartEntry" %>
-<%@ page import="java.util.List" %>
 <%@ page import="ru.alexeymz.web.config.Language" %>
-<%@ page import="java.util.Collections" %>
 <%@ page import="ru.alexeymz.web.model.User" %>
+<%@ page import="ru.alexeymz.web.core.utils.StreamUtils" %>
+<%@ page import="java.util.*" %>
+<%@ page import="ru.alexeymz.web.core.utils.EscapeUtils" %>
 <% ResourceBundle l10n = (ResourceBundle) request.getAttribute("l10n"); %>
 <div class="topbar">
     <div class="topbar-wrapper">
@@ -43,6 +43,11 @@
                     <option value="<%= lang.code %>" <%= selected ? "selected" : "" %>><%= lang.label %></option>
                 <% } %>
                 </select>
+                <% for (Map.Entry<String, String[]> pair : request.getParameterMap().entrySet()) { %>
+                    <% if (pair.getKey().equals("title-key") || pair.getKey().equals("lang")) { continue; } %>
+                    <input type="hidden" name="<%= pair.getKey() %>"
+                           value="<%= EscapeUtils.joinParameterValues(pair.getValue()) %>" />
+                <% } %>
             </form>
         </div>
     </div>

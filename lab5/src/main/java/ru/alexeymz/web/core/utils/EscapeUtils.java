@@ -1,6 +1,9 @@
 package ru.alexeymz.web.core.utils;
 
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public final class EscapeUtils {
     private EscapeUtils() {}
 
@@ -55,5 +58,15 @@ public final class EscapeUtils {
 
     public static String wrapNull(String input) {
         return input == null ? "" : input;
+    }
+
+    public static String joinParameterValues(String[] requestParameterValues) {
+        if (requestParameterValues.length == 0) {
+            return "";
+        } else if (requestParameterValues.length == 1) {
+            return requestParameterValues[0];
+        } else {
+            return Arrays.stream(requestParameterValues).reduce("", (acc, s) -> acc + "," + s);
+        }
     }
 }
