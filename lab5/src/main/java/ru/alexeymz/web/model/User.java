@@ -1,6 +1,6 @@
 package ru.alexeymz.web.model;
 
-public class User {
+public final class User {
     private String username;
     private String firstName;
     private String defaultTab;

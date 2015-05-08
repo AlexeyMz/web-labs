@@ -12,8 +12,8 @@
             <%= l10n.getString("store.title") %></a>
         </div>
         <div class="profile-bar">
+            <% User user = (User)request.getAttribute("user"); %>
             <div class="button">
-                <% User user = (User)request.getAttribute("user"); %>
                 <% if (user == null) { %>
                     <a href="profile"><%= l10n.getString("topbar.signin") %></a>
                 <% } else { %>
@@ -34,7 +34,9 @@
                     <span>(<%= entries.size() %>)</span>
                 <% } %>
             </div>
-            <div class="button"><%= l10n.getString("topbar.history") %></div>
+            <% if (user != null) { %>
+                <div class="button"><a href="orders"><%= l10n.getString("topbar.history") %></a></div>
+            <% } %>
             <form class="language-switch">
                 <label for="lang"><%= l10n.getString("store.language_switch.label") %>: </label>
                 <select id="lang" name="lang" onchange="submit()">

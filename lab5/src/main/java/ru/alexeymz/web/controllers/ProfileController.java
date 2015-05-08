@@ -42,20 +42,15 @@ public class ProfileController extends BaseAppController {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getRemoteUser();
-        if (username == null) { resp.sendError(403); return; }
-        User user = userRepository.findByUsername(username);
-        if (user == null) { resp.sendError(400); return; }
-
+        User user = getCurrentUserOrError(userRepository, req, resp);
+        if (user == null) { return; }
         renderView(req, resp, user);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getRemoteUser();
-        if (username == null) { resp.sendError(403); return; }
-        User user = userRepository.findByUsername(username);
-        if (user == null) { resp.sendError(400); return; }
+        User user = getCurrentUserOrError(userRepository, req, resp);
+        if (user == null) { return; }
 
         String firstName = req.getParameter("firstName");
         if (firstName != null && firstName.length() < 100) {

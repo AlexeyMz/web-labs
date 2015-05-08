@@ -94,14 +94,4 @@ public class CartController extends BaseAppController {
 
         resp.sendRedirect(req.getRequestURI());
     }
-
-    List<CartEntry> ensureEntries(HttpServletRequest req) {
-        List<CartEntry> entries = (List<CartEntry>)req
-                .getSession().getAttribute("entries");
-        if (entries == null) {
-            entries = new ArrayList<>();
-            req.getSession().setAttribute("entries", entries);
-        }
-        return entries;
-    }
 }

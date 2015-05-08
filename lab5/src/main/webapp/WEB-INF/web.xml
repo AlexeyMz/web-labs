@@ -5,6 +5,8 @@
     <security-constraint>
         <web-resource-collection>
             <url-pattern>/profile</url-pattern>
+            <url-pattern>/order</url-pattern>
+            <url-pattern>/orders</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>user</role-name>

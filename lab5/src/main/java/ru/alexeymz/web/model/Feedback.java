@@ -1,6 +1,6 @@
 package ru.alexeymz.web.model;
 
-public class Feedback {
+public final class Feedback {
     private long id;
     private String text;
     private String authorName;

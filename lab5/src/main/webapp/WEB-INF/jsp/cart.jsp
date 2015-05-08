@@ -23,10 +23,10 @@
                                      currencyCode="USD" /></span>
             <c:choose>
                 <c:when test="${pageContext.request.remoteUser != null}">
-                    <button><fmt:message key="cart.proceed_order" /></button>
+                    <button onclick="location.href='order'"><fmt:message key="cart.proceed_order" /></button>
                 </c:when>
                 <c:otherwise>
-                    <button><fmt:message key="cart.sign_in_to_proceed" /></button>
+                    <button onclick="location.href='profile'"><fmt:message key="cart.sign_in_to_proceed" /></button>
                 </c:otherwise>
             </c:choose>
         </span>

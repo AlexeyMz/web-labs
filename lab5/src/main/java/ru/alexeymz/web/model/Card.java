@@ -3,7 +3,7 @@ package ru.alexeymz.web.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Card {
+public final class Card {
     private long id;
     private String set;
     private int numberInSet;

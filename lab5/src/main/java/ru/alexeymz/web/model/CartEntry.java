@@ -1,6 +1,6 @@
 package ru.alexeymz.web.model;
 
-public class CartEntry {
+public final class CartEntry {
     Card card;
     int quantity;
 

@@ -225,3 +225,8 @@ article.tabs section {
 .user-profile-card > div {
     margin-bottom: 6px;
 }
+/*** orders ***/
+.order-entry {
+    border: 2px dashed;
+    margin: 10px 15% 0 15%;
+}
