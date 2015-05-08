@@ -1,0 +1,15 @@
+<?xml version="1.1"?>
+<deliveryPoints>
+    <deliveryPoint key="kolpino" coords="59.740706,30.579973">
+        <address>СПб, Колпино, ул. Веры Слуцкой, 17</address>
+    </deliveryPoint>
+    <deliveryPoint key="pushkin" coords="59.721728,30.42858">
+        <address>СПб, Пушкин, Привокзальная площадь, 2</address>
+    </deliveryPoint>
+    <deliveryPoint key="petrogradskaya" coords="59.966282,30.310613">
+        <address>СПб, Каменноостровский проспект, 40</address>
+    </deliveryPoint>
+    <deliveryPoint key="prosvescheniya" coords="60.052735,30.331148">
+        <address>СПб, проспект Просвещения, 19</address>
+    </deliveryPoint>
+</deliveryPoints>

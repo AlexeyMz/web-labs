@@ -20,4 +20,12 @@ public final class CartEntry {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "CartEntry{" +
+                "card=" + card +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

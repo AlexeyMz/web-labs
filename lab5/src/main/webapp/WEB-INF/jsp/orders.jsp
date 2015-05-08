@@ -1,6 +1,9 @@
 <%@ page import="ru.alexeymz.web.data.CardRepository" %>
 <%@ page import="ru.alexeymz.web.model.Card" %>
 <%@ page import="ru.alexeymz.web.model.OrderEntry" %>
+<%@ page import="ru.alexeymz.web.model.Order" %>
+<%@ page import="ru.alexeymz.web.data.DeliveryPointRepository" %>
+<%@ page import="ru.alexeymz.web.model.DeliveryPoint" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,6 +12,7 @@
 <html lang="en">
 <head>
     <% CardRepository cardRepository = (CardRepository)request.getAttribute("cardRepo"); %>
+    <% DeliveryPointRepository deliveryPointRepository = (DeliveryPointRepository)request.getAttribute("deliveryPointRepo"); %>
     <meta charset="UTF-8">
     <title><fmt:message key="orders.title" /> | <fmt:message key="store.title" /></title>
     <link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -29,7 +33,11 @@
                               currencyCode="USD" />
             </div>
             <c:if test="${order.deliveryPoint != null}">
-                <div><span><fmt:message key="order.delivery_point" />: </span><c:out value="${order.deliveryPoint}" /></div>
+                <% Order order = (Order)pageContext.getAttribute("order"); %>
+                <% DeliveryPoint point = deliveryPointRepository.findByKey(order.getDeliveryPoint()); %>
+                <div><span><fmt:message key="order.delivery_point" />: </span>
+                    <c:out value="<%= point == null ? order.getDeliveryPoint() : point.getAddress() %>" />
+                </div>
             </c:if>
             <c:if test="${order.deliveryAddress != null}">
                 <div><span><fmt:message key="order.delivery_address" />: </span><c:out value="${order.deliveryAddress}" /></div>

@@ -1,12 +1,10 @@
 package ru.alexeymz.web.controllers;
 
 import ru.alexeymz.web.data.CardRepository;
+import ru.alexeymz.web.data.DeliveryPointRepository;
 import ru.alexeymz.web.data.OrderRepository;
 import ru.alexeymz.web.data.UserRepository;
-import ru.alexeymz.web.model.CartEntry;
-import ru.alexeymz.web.model.Order;
-import ru.alexeymz.web.model.OrderEntry;
-import ru.alexeymz.web.model.User;
+import ru.alexeymz.web.model.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -20,11 +18,14 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
+
 @WebServlet("/orders")
 public class OrderHistoryController extends BaseAppController {
     private CardRepository cardRepository;
     private UserRepository userRepository;
     private OrderRepository orderRepository;
+    private DeliveryPointRepository deliveryPointRepository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -33,6 +34,7 @@ public class OrderHistoryController extends BaseAppController {
         this.cardRepository = (CardRepository)context.getAttribute(CardRepository.ATTRIBUTE);
         this.userRepository = (UserRepository)context.getAttribute(UserRepository.ATTRIBUTE);
         this.orderRepository = (OrderRepository)context.getAttribute(OrderRepository.ATTRIBUTE);
+        this.deliveryPointRepository = (DeliveryPointRepository)context.getAttribute(DeliveryPointRepository.ATTRIBUTE);
     }
 
     @Override
@@ -47,8 +49,29 @@ public class OrderHistoryController extends BaseAppController {
         User user = getCurrentUserOrError(userRepository, req, resp);
         if (user == null) { return; }
 
+        String deliveryType = req.getParameter("deliveryType");
+        String deliveryPointKey = req.getParameter("deliveryPoint");
+        String deliveryAddress = req.getParameter("deliveryAddress");
+
         Order order = new Order();
         order.setUsername(user.getUsername());
+
+        if (deliveryType == null) { resp.sendError(400); return; }
+        else if (deliveryType.equals("byCourier")) {
+            if (deliveryAddress != null) { deliveryAddress = deliveryAddress.trim(); }
+            if (deliveryAddress == null || deliveryAddress.isEmpty()) {
+                resp.sendError(400);
+                return;
+            }
+            order.setDeliveryAddress(deliveryAddress);
+        } else {
+            DeliveryPoint point = deliveryPointKey == null ? null : deliveryPointRepository.findByKey(deliveryPointKey);
+            if (point == null) {
+                resp.sendError(400);
+                return;
+            }
+            order.setDeliveryPoint(point.getKey());
+        }
 
         Set<OrderEntry> entries = new HashSet<>();
         BigDecimal total = BigDecimal.ZERO;
@@ -58,10 +81,20 @@ public class OrderHistoryController extends BaseAppController {
             entries.add(new OrderEntry(order, cartEntry.getCard().getId(), cartEntry.getQuantity()));
         }
 
+        if (entries.isEmpty()) {
+            log(String.format("User <%s> trying to submit an empty order.", user.getUsername()));
+            resp.sendError(400);
+            return;
+        }
+
         order.setTotal(total);
         order.setEntries(entries);
         order.setPurchaseDate(Calendar.getInstance());
         orderRepository.save(order);
+
+        log(String.format("User <%s> submitted a new order: %s", user.getUsername(), order.toString()));
+        // clear shopping cart
+        ensureEntries(req).clear();
 
         renderView(req, resp, user);
     }
@@ -69,8 +102,11 @@ public class OrderHistoryController extends BaseAppController {
 
     private void renderView(HttpServletRequest req, HttpServletResponse resp, User user)
             throws ServletException, IOException {
-        req.setAttribute("orders", orderRepository.findByUsername(user.getUsername()));
+        req.setAttribute("orders", orderRepository.findByUsername(user.getUsername())
+                .stream().sorted((a, b) -> b.getPurchaseDate().compareTo(a.getPurchaseDate()))
+                .collect(toList()));
         req.setAttribute("cardRepo", cardRepository);
+        req.setAttribute("deliveryPointRepo", deliveryPointRepository);
         req.getRequestDispatcher("/WEB-INF/jsp/orders.jsp").forward(req, resp);
     }
 }

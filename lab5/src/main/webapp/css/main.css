@@ -230,3 +230,33 @@ article.tabs section {
     border: 2px dashed;
     margin: 10px 15% 0 15%;
 }
+/*** order ***/
+.order-form {
+    margin: 20px 15% 0 15%;
+}
+.order-form .order-map {
+    float: right;
+    width: 40%;
+    height: 500px;
+}
+.order-form .total-price-info {
+    margin-bottom: 15px;
+}
+.self-delivery-selection {
+    margin: 15px 0 15px 0;
+}
+.courier-delivery-address {
+    margin: 15px 0 15px 0;
+}
+.self-delivery-selection select {
+    width: 30%;
+}
+.courier-delivery-address input {
+    width: 30%;
+}
+.order-form input[value='byCourier']:checked ~ .self-delivery-selection {
+    display: none;
+}
+.order-form input[value='toDeliveryPoint']:checked ~ .courier-delivery-address {
+    display: none;
+}

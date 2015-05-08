@@ -1,17 +1,14 @@
 package ru.alexeymz.web.impl.data;
 
+import static ru.alexeymz.web.core.utils.XmlUtils.*;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import ru.alexeymz.web.data.CardRepository;
 import ru.alexeymz.web.model.Card;
 import ru.alexeymz.web.model.Feedback;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -88,27 +85,5 @@ public class XmlCardRepository implements CardRepository {
                 textContent(element),
                 element.getAttribute("author"),
                 Integer.valueOf(element.getAttribute("rate")));
-    }
-
-    private Document loadXml(InputStream is) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(is);
-        } catch (ParserConfigurationException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } catch (SAXException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    private Element findElementByTag(Node parent, String tagName) {
-        return (Element)((Element) parent).getElementsByTagName(tagName).item(0);
-    }
-
-    private String textContent(Node node) {
-        return node.getTextContent().trim();
     }
 }

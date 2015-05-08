@@ -77,4 +77,11 @@ public final class Card {
     public BigDecimal getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                '}';
+    }
 }

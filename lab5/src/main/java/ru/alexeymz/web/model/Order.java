@@ -78,4 +78,17 @@ public final class Order {
     public void setEntries(Set<OrderEntry> entries) {
         this.entries = entries;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", purchaseDate=" + purchaseDate +
+                ", deliveryPoint='" + deliveryPoint + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", total=" + total +
+                ", entries=" + entries +
+                '}';
+    }
 }
