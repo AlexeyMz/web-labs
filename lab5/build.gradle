@@ -32,4 +32,7 @@ dependencies {
     compile 'javax.servlet:jstl:1.2'
     compile 'com.h2database:h2:1.4.187'
     compile 'org.hibernate:hibernate-core:4.3.9.Final'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.2'
+    compile 'org.apache.logging.log4j:log4j-web:2.2'
 }

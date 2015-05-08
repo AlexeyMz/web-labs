@@ -1,8 +1,14 @@
 package ru.alexeymz.web.core.utils;
 
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Calendar;
 
 public final class EscapeUtils {
     private EscapeUtils() {}
@@ -67,6 +73,53 @@ public final class EscapeUtils {
             return requestParameterValues[0];
         } else {
             return Arrays.stream(requestParameterValues).reduce("", (acc, s) -> acc + "," + s);
+        }
+    }
+
+    public static String calendarToISO8601(Calendar calendar) {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX")
+                .withZone(ZoneOffset.UTC).format(calendar.toInstant());
+    }
+
+    /**
+     * Decodes the passed UTF-8 String using an algorithm that's compatible with
+     * JavaScript's <code>decodeURIComponent</code> function. Returns
+     * <code>null</code> if the String is <code>null</code>.
+     *
+     * @param s The UTF-8 encoded String to be decoded
+     * @return the decoded String
+     */
+    public static String decodeURIComponent(String s) {
+        if (s == null) { return null; }
+        try {
+            return URLDecoder.decode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // This exception should never occur.
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Encodes the passed String as UTF-8 using an algorithm that's compatible
+     * with JavaScript's <code>encodeURIComponent</code> function. Returns
+     * <code>null</code> if the String is <code>null</code>.
+     *
+     * @param s The String to be encoded
+     * @return the encoded String
+     */
+    public static String encodeURIComponent(String s) {
+        if (s == null) { return null; }
+        try {
+            return URLEncoder.encode(s, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("\\%21", "!")
+                    .replaceAll("\\%27", "'")
+                    .replaceAll("\\%28", "(")
+                    .replaceAll("\\%29", ")")
+                    .replaceAll("\\%7E", "~");
+        } catch (UnsupportedEncodingException e) {
+            // This exception should never occur.
+            throw new RuntimeException(e);
         }
     }
 }

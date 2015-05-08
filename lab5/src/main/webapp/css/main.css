@@ -213,8 +213,7 @@ article.tabs section {
     font-style: italic;
 }
 .user-profile-card {
-    margin-left: 100px;
-    margin-top: 20px;
+    margin: 10px 15% 10px 15%;
 }
 .user-profile-card img.avatar {
     float: left;
@@ -259,4 +258,33 @@ article.tabs section {
 }
 .order-form input[value='toDeliveryPoint']:checked ~ .courier-delivery-address {
     display: none;
+}
+/*** shop comments in profile ***/
+.shop-comment-panel {
+    margin: 0 15% 0 15%;
+}
+.shop-comment-panel input {
+    width: 50%;
+}
+.shop-comment {
+    position: relative;
+    border-width: 1px;
+    border-color: black;
+    border-style: dashed;
+    border-radius: 5px;
+    margin: 0.5em 0;
+    padding: 3px 7px;
+}
+.comment-author {
+    display: inline-block;
+}
+.comment-rate {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    margin-right: 0.5em;
+}
+.comment-text {
+    margin-top: 4px;
+    border-top: dotted 1px lightgrey;
 }

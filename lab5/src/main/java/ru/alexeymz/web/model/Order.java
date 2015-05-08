@@ -1,7 +1,11 @@
 package ru.alexeymz.web.model;
 
+import ru.alexeymz.web.core.utils.EscapeUtils;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Set;
 
@@ -84,7 +88,7 @@ public final class Order {
         return "Order{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", purchaseDate=" + purchaseDate +
+                ", purchaseDate=" + EscapeUtils.calendarToISO8601(purchaseDate) + '\'' +
                 ", deliveryPoint='" + deliveryPoint + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", total=" + total +

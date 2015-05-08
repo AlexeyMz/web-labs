@@ -74,6 +74,7 @@ public class CartController extends BaseAppController {
             } else {
                 entries.add(new CartEntry(card, 1));
             }
+            log(String.format("Someone added to cart %s", card));
         } else if (command == Command.REMOVE) {
             Optional<CartEntry> entry = entries.stream()
                     .filter(ce -> ce.getCard().getId() == id)
@@ -86,6 +87,7 @@ public class CartController extends BaseAppController {
                     entries.remove(entry.get());
                 }
             }
+            log(String.format("Someone removed from cart %s", card));
         }
         req.getSession().setAttribute("total", entries.stream()
                 .map(ce -> ce.getCard().getPrice().multiply(

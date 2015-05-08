@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 import static ru.alexeymz.web.core.utils.EscapeUtils.wrapNull;
 
@@ -55,10 +56,12 @@ public class ProfileController extends BaseAppController {
         String firstName = req.getParameter("firstName");
         if (firstName != null && firstName.length() < 100) {
             user.setFirstName(firstName);
+            log(String.format("User <%s> changed first name to %s", user.getUsername(), user.getFirstName()));
         }
         String defaultTab = req.getParameter("defaultItemTab");
         if (defaultTab != null && defaultTab.length() < 10) {
             user.setDefaultTab(defaultTab.isEmpty() ? null : defaultTab);
+            log(String.format("User <%s> changed defaultTab to %s", user.getUsername(), user.getDefaultTab()));
         }
         Part avatarPicture = req.getPart("avatarPicture");
         if (avatarPicture != null) {
@@ -68,6 +71,7 @@ public class ProfileController extends BaseAppController {
                     avatarSrc.length() <= MAX_AVATAR_FILE_SIZE)
                 {
                     user.setAvatar(avatarSrc);
+                    log(String.format("User <%s> changed avatar", user.getUsername()));
                 }
             } catch (IOException ex) {
                 log("Avatar transformation to base64 failed", ex);
