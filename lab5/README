@@ -1,0 +1,9 @@
+Default H2 database url: jdbc:h2:tcp://localhost/~/weblabs
+
+To run H2 create Java Application Debug/Run configuration with org.h2.tools.Server as main class.
+
+Default Tomcat users config (<tomcat-home>/conf/tomcat-users.xml):
+
+    <user username="alexey" password="pass" roles="user"/>
+    <user username="foo" password="pass" roles="user"/>
+	

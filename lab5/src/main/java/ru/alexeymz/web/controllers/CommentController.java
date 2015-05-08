@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Calendar;
-import java.util.Optional;
+import java.util.*;
 
 @WebServlet("/comments")
 public class CommentController extends BaseAppController {
@@ -36,32 +35,24 @@ public class CommentController extends BaseAppController {
         if (user == null) { return; }
 
         Optional<Long> startId = Optional.ofNullable(matchId(req.getParameter("fromID")));
+        Locale locale = Locale.forLanguageTag((String)req.getAttribute("langCode"));
+        int offset = Integer.valueOf(req.getParameter("date"));
 
-        StringBuilder builder = new StringBuilder().append("[");
-        boolean firstComment = true;
+        List<Object> resultJson = new ArrayList<>();
+        resultJson.add(EscapeUtils.calendarToLocal(Calendar.getInstance(), locale, offset));
+
         for (Comment comment : commentRepository.findCommentFrom(startId)) {
-            if (firstComment) {
-                firstComment = false;
-            } else {
-                builder.append(String.format(",%n"));
-            }
             User author = userRepository.findByUsername(comment.getUsername());
-            builder
-                .append("{\"id\": ")
-                .append(comment.getId())
-                .append(", \"author\": \"")
-                .append(author == null ? comment.getUsername() : author.getFirstName())
-                .append("\", \"date\": \"")
-                .append(EscapeUtils.calendarToISO8601(comment.getCommentDate()))
-                .append("\", \"text\": \"")
-                .append(EscapeUtils.escapeHTML(comment.getText())
-                        .replace("\"", "\\\"").replace("\\", "\\\\"))
-                .append("\"}");
+            Map<String, Object> info = new HashMap<>();
+            info.put("id", comment.getId());
+            info.put("author", author == null ? comment.getUsername() : author.getFirstName());
+            info.put("date", EscapeUtils.calendarToLocal(comment.getCommentDate(), locale, offset));
+            info.put("text", EscapeUtils.escapeHTML(comment.getText()));
+            resultJson.add(info);
         }
-        builder.append("]");
 
         try (OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream())) {
-            writer.write(EscapeUtils.encodeURIComponent(builder.toString()));
+            writer.write(EscapeUtils.encodeURIComponent(EscapeUtils.toJsonObject(resultJson)));
         }
     }
 

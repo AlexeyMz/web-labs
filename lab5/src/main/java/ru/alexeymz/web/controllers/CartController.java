@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class CartController extends BaseAppController {
             return;
         }
 
-        List<CartEntry> entries = ensureEntries(req);
+        List<CartEntry> entries = getCartEntries(req);
 
         if (command == Command.ADD) {
             Optional<CartEntry> entry = entries.stream()
@@ -95,5 +96,22 @@ public class CartController extends BaseAppController {
                 .reduce(BigDecimal.ZERO, BigDecimal::add));
 
         resp.sendRedirect(req.getRequestURI());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<CartEntry> getCartEntries(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        List<CartEntry> entries = (List<CartEntry>)session.getAttribute("entries");
+        if (entries == null) {
+            entries = new ArrayList<>();
+            session.setAttribute("entries", entries);
+        }
+        return entries;
+    }
+
+    public static void clearCart(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("entries");
+        session.removeAttribute("total");
     }
 }

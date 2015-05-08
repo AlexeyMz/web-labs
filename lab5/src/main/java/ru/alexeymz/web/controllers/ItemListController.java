@@ -37,7 +37,7 @@ public class ItemListController extends BaseAppController {
             Cookie cookie = new Cookie(SELECTED_SET_COOKIE, selectedSet.get());
             cookie.setMaxAge(10); /* seconds */
             resp.addCookie(cookie);
-        } else {
+        } else if (req.getCookies() != null) {
             selectedSet = Arrays.stream(req.getCookies())
                     .filter(c -> c.getName().equals(SELECTED_SET_COOKIE))
                     .map(Cookie::getValue)

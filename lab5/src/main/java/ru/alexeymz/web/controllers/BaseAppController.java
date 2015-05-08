@@ -47,15 +47,4 @@ public abstract class BaseAppController extends HttpServlet {
         }
         return user;
     }
-
-    @SuppressWarnings("unchecked")
-    protected List<CartEntry> ensureEntries(HttpServletRequest req) {
-        List<CartEntry> entries = (List<CartEntry>)req
-                .getSession().getAttribute("entries");
-        if (entries == null) {
-            entries = new ArrayList<>();
-            req.getSession().setAttribute("entries", entries);
-        }
-        return entries;
-    }
 }

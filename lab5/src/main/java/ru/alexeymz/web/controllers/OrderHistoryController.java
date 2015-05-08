@@ -75,7 +75,7 @@ public class OrderHistoryController extends BaseAppController {
 
         Set<OrderEntry> entries = new HashSet<>();
         BigDecimal total = BigDecimal.ZERO;
-        for (CartEntry cartEntry : ensureEntries(req)) {
+        for (CartEntry cartEntry : CartController.getCartEntries(req)) {
             BigDecimal price = cartEntry.getCard().getPrice().multiply(new BigDecimal(cartEntry.getQuantity()));
             total = total.add(price);
             entries.add(new OrderEntry(order, cartEntry.getCard().getId(), cartEntry.getQuantity()));
@@ -93,8 +93,7 @@ public class OrderHistoryController extends BaseAppController {
         orderRepository.save(order);
 
         log(String.format("User <%s> submitted a new order: %s", user.getUsername(), order.toString()));
-        // clear shopping cart
-        ensureEntries(req).clear();
+        CartController.clearCart(req);
 
         renderView(req, resp, user);
     }

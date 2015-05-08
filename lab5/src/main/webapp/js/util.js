@@ -23,20 +23,50 @@ function post(path, params, method) {
     form.submit();
 }
 
-function ajax(method, url, data, callback) {
+/***
+ * @param options: {
+ *    method: 'get'|'post'|'put'|'delete'|...
+ *    url: string;
+ *    data: object|string|any;
+ *    success: (response: string) => void;
+ * }
+ */
+function ajax(options) {
     var xmlhttp;
     // compatible with IE7+, Firefox, Chrome, Opera, Safari
     xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-            callback(xmlhttp.responseText);
-        }
-    };
-    xmlhttp.open(method, url, true);
-    if (method.toLowerCase() === "post") {
-        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    if (options.success) {
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                options.success(xmlhttp.responseText);
+            }
+        };
     }
-    xmlhttp.send(data);
+
+    var params;
+    if (typeof options.data === "object") {
+        params = "";
+        for (var key in options.data) {
+            if (options.data.hasOwnProperty(key) && typeof options.data[key] !== "undefined") {
+                if (params.length > 0) { params += "&"; }
+                params += key + "=" + encodeURIComponent("" + options.data[key]);
+            }
+        }
+    } else {
+        params = "" + options.data;
+    }
+
+    options.method = options.method.toLowerCase();
+    var hasPayload = options.method === "post" || options.method === "put";
+
+    if (!hasPayload && params.length > 0) {
+        options.url += "?" + params;
+    }
+    xmlhttp.open(options.method, options.url, true);
+    if (hasPayload) {
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    }
+    xmlhttp.send(hasPayload ? params : undefined);
 }
 
 function createElement(parent, tag, textContent) {

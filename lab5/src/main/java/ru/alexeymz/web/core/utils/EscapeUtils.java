@@ -1,14 +1,17 @@
 package ru.alexeymz.web.core.utils;
 
 
+import sun.util.resources.CalendarData;
+
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.time.format.FormatStyle;
+import java.time.temporal.TemporalAccessor;
+import java.util.*;
 
 public final class EscapeUtils {
     private EscapeUtils() {}
@@ -81,6 +84,13 @@ public final class EscapeUtils {
                 .withZone(ZoneOffset.UTC).format(calendar.toInstant());
     }
 
+    public static String calendarToLocal(Calendar calendar, Locale locale, int minuteOffset) {
+        ZoneId zoneId = ZoneId.ofOffset("UTC", ZoneOffset.ofTotalSeconds(minuteOffset * 60));
+        return DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
+                .withLocale(locale).format(LocalDateTime.ofInstant(
+                        calendar.toInstant(), zoneId));
+    }
+
     /**
      * Decodes the passed UTF-8 String using an algorithm that's compatible with
      * JavaScript's <code>decodeURIComponent</code> function. Returns
@@ -121,5 +131,68 @@ public final class EscapeUtils {
             // This exception should never occur.
             throw new RuntimeException(e);
         }
+    }
+
+    public static String toJsonObject(Object object) {
+        StringBuilder builder = new StringBuilder();
+        appendJsonObject(builder, object);
+        return builder.toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void appendJsonObject(StringBuilder builder, Object object) {
+        if (object == null) {
+            builder.append("null");
+        } else if (object.getClass().isArray()) {
+            builder.append("[");
+            for (int i = 0; i < Array.getLength(object); i++) {
+                if (i != 0) { builder.append(", "); }
+                appendJsonObject(builder, Array.get(object, i));
+            }
+            builder.append("]");
+        } else if (object instanceof Iterable) {
+            Iterable iterable = (Iterable)object;
+            Iterator iterator = iterable.iterator();
+            builder.append("[");
+            if (iterator.hasNext()) {
+                appendJsonObject(builder, iterator.next());
+            }
+            while (iterator.hasNext()) {
+                builder.append(", ");
+                appendJsonObject(builder, iterator.next());
+            }
+            builder.append("]");
+        } else if (object instanceof Map) {
+            Map map = (Map)object;
+            Iterator<Map.Entry> iterator = map.entrySet().iterator();
+            boolean first = true;
+            builder.append("{");
+            while (iterator.hasNext()) {
+                if (first) { first = false; }
+                else { builder.append(", "); }
+                Map.Entry entry = iterator.next();
+                builder
+                    .append("\"")
+                    .append(escapeJsonString(entry.getKey().toString()))
+                    .append("\": ");
+                appendJsonObject(builder, entry.getValue());
+            }
+            builder.append("}");
+        } else if (object instanceof Number) {
+            builder.append(object.toString());
+        } else {
+            builder
+                .append("\"")
+                .append(escapeJsonString(object.toString()))
+                .append("\"");
+        }
+    }
+
+    private static String escapeJsonString(String unescapedText) {
+        return unescapedText
+            .replaceAll("\"", "\\")
+            .replaceAll("\r", "\\r")
+            .replaceAll("\n", "\\n")
+            .replaceAll("\\\\", "\\\\");
     }
 }

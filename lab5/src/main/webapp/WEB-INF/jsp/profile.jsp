@@ -40,6 +40,7 @@
         </div>
     </form>
     <div class="shop-comment-panel">
+        <div id="currentTime"></div>
         <input type="text" id="comment" placeholder="<fmt:message key="comment.placeholder" />" />
         <div id="comments"></div>
     </div>
@@ -48,27 +49,42 @@
         var commentRoot;
 
         function requestComments() {
-            var param = lastID ? ("?fromID=" + (lastID + 1)) : "";
-            ajax("get", "comments" + param, null, function (resultText) {
-                var newComments = JSON.parse(decodeURIComponent(resultText));
-                for (var i = 0; i < newComments.length; i++) {
-                    var comment = newComments[i];
-                    var commentElem = document.createElement("div");
-                    commentElem.className = 'shop-comment';
-                    commentElem.setAttribute('data-comment-id', comment.id);
-                    createElement(commentElem, "div", comment.author).className = 'comment-author';
-                    createElement(commentElem, "div", comment.date).className = 'comment-date';
-                    createElement(commentElem, "div", comment.text).className = 'comment-text';
-                    prepend(commentRoot, commentElem);
-                    if (!lastID || comment.id > lastID) { lastID = comment.id; }
+            var offset = new Date().getTimezoneOffset();
+            var ajaxData = { date: (-offset) };
+            if (lastID) { ajaxData.fromID = lastID + 1; }
+
+            ajax({
+                method: "get",
+                url: "comments",
+                data: ajaxData,
+                success: function (resultText) {
+                    var newComments = JSON.parse(decodeURIComponent(resultText));
+                    document.getElementById('currentTime').textContent = newComments[0];
+                    for (var i = 1; i < newComments.length; i++) {
+                        var comment = newComments[i];
+                        var commentElem = document.createElement("div");
+                        commentElem.className = 'shop-comment';
+                        commentElem.setAttribute('data-comment-id', comment.id);
+                        createElement(commentElem, "div", comment.author).className = 'comment-author';
+                        createElement(commentElem, "div", comment.date).className = 'comment-date';
+                        createElement(commentElem, "div", comment.text).className = 'comment-text';
+                        prepend(commentRoot, commentElem);
+                        if (!lastID || comment.id > lastID) {
+                            lastID = comment.id;
+                        }
+                    }
+                    setTimeout(function () { requestComments(); }, 1000);
                 }
-                setTimeout(function() { requestComments(); }, 2000);
             });
         }
 
         function onKeyDown(e) {
             if (e.keyCode == 13) {
-                ajax("post", "comments", "text=" + encodeURIComponent(this.value), function () {});
+                ajax({
+                    method: "post",
+                    url: "comments",
+                    data: { text: this.value }
+                });
                 this.value = "";
             }
         }
